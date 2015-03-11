@@ -32,10 +32,13 @@ class Handler(webapp2.RequestHandler):
 	def render(self, template, **kw):
 		self.write(self.render_str(template, **kw))
 
-class MainPage(Handler):
+class HomePage(Handler):
     def get(self):
-        self.render("Welcome_Page.html")
+        self.render("Home_Page.html")
 
-app = webapp2.WSGIApplication([
-    ('/', MainPage)
-], debug=True)
+class WelcomePage(Handler):
+	def get(self):
+		self.render("Welcome_Page.html", name = "Pradhyo")
+
+app = webapp2.WSGIApplication([('/', HomePage),
+								('/welcome', WelcomePage)], debug=True)

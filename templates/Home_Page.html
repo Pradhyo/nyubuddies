@@ -4,11 +4,11 @@
 You have to sign up!
 <br>
 
-<form method="get">
-Username        <input type = "text" name = "username"> <br>
-Password 		<input type = "password" name = "password"> <br>
-Verify Password <input type = "password" name = "verify"> <br>
-Email 			<input type = "text" name = "email"> <br>
+<form method="post">
+Username <input type = "text" name = "username"> <br> {{username_error}}
+Password <input type = "password" name = "password"> <br> {{password_error}}
+Verify Password <input type = "password" name = "verify"> <br> {{verify_error}}
+Email <input type = "text" name = "email"> <br> {{email_error}}
 <input type = "submit">
 </form>
 

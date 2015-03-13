@@ -54,9 +54,12 @@ class HomePage(Handler):
 		if not valid_password(password):
 			params['password_error'] = "That's not a valid password"
 			error = True
-
-		if verify != password:
+		elif verify != password:
 			params['verify_error'] = "Password mismatch"
+			error = True
+
+		if not valid_email(email):
+			params['email_error'] = "Not a valid email"
 			error = True
 
 		if error:

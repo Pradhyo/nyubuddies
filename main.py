@@ -52,7 +52,7 @@ class HomePage(Handler):
     		error = True
 
     	if error:
-    		self.render("Home_Page.html")
+    		self.render("Home_Page.html", **params)
     	else:
     		self.redirect('/welcome?name=' + username)
 

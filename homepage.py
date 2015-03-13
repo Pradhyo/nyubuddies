@@ -7,16 +7,16 @@ class HomePage(Handler):
 
 	def post(self):
 		error = False
-		username = self.request.get('username')
+		netID = self.request.get('netID')
 		password = self.request.get('password')
 		verify = self.request.get('verify')
 		email = self.request.get('email')
 
-		params = dict(username = username,
+		params = dict(netID = netID,
 					  email = email)
 
-		if not valid_username(username):
-			params['username_error'] = "That's not a valid username"
+		if not valid_netID(netID):
+			params['netID_error'] = "That's not a valid netID"
 			error = True
 
 		if not valid_password(password):
@@ -26,24 +26,23 @@ class HomePage(Handler):
 			params['verify_error'] = "Password mismatch"
 			error = True
 
-		if not valid_email(email):
-			params['email_error'] = "Not a valid email"
+		if not valid_email(netID, email):
+			params['email_error'] = "Enter email corresponding to your NetID"
 			error = True
 
 		if error:
 			self.render("Home_Page.html", **params)
 		else:
-			self.redirect('/welcome?name=' + username)
+			self.redirect('/welcome?name=' + netID)
 
 
-USER_RE = re.compile(r"^[a-zA-Z0-9_-]{3,20}$")
-def valid_username(username):
-	return username and USER_RE.match(username)
+USER_RE = re.compile(r"^[a-zA-Z0-9_-]{6}$")
+def valid_netID(netID):
+	return netID and USER_RE.match(netID)
 
 PASS_RE = re.compile(r"^.{3,20}$")	
 def valid_password(password):
 	return password and PASS_RE.match(password)
 
-EMAIL_RE = re.compile(r'^[\S]+@[\S]+\.[\S]+$')	
-def valid_email(email):
-	return not email or EMAIL_RE.match(email)
+def valid_email(netID, email):
+	return len(email) == 14 and netID in email and '@nyu.edu' in email

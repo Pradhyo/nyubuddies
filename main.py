@@ -56,6 +56,11 @@ class HomePage(Handler):
     	else:
     		self.redirect('/welcome?name=' + username)
 
+
+USER_RE = re.compile(r"^[a-zA-Z0-9_-]{3,20}$")
+def valid_username(username):
+	return username and USER_RE.match(username)
+
 class WelcomePage(Handler):
 	def get(self):
 		self.render("Welcome_Page.html", name = "Pradhyo")

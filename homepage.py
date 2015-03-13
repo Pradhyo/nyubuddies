@@ -1,5 +1,6 @@
 from handler import Handler 
 import re
+#import string
 
 class HomePage(Handler):
 	def get(self):
@@ -36,9 +37,9 @@ class HomePage(Handler):
 			self.redirect('/welcome?name=' + netID)
 
 
-USER_RE = re.compile(r"^[a-zA-Z0-9_-]{6}$")
+USER_RE = re.compile(r"^[a-z0-9]{6}$")
 def valid_netID(netID):
-	return netID and USER_RE.match(netID)
+	return netID and USER_RE.match(netID) and netID[3:].isdigit()
 
 PASS_RE = re.compile(r"^.{3,20}$")	
 def valid_password(password):

@@ -34,27 +34,27 @@ class Handler(webapp2.RequestHandler):
 		self.write(self.render_str(template, **kw))
 
 class HomePage(Handler):
-    def get(self):
-        self.render("Home_Page.html")
+	def get(self):
+		self.render("Home_Page.html")
 
-    def post(self):
-    	error = False
-    	username = self.request.get('username')
-    	password = self.request.get('password')
-    	verify = self.request.get('verify')
-    	email = self.request.get('email')
+	def post(self):
+		error = False
+		username = self.request.get('username')
+		password = self.request.get('password')
+		verify = self.request.get('verify')
+		email = self.request.get('email')
 
-    	params = dict(username = username,
-    				  email = email)
+		params = dict(username = username,
+					  email = email)
 
-    	if not valid_username(username):
-    		params['username_error'] = "That's not a valid username"
-    		error = True
+		if not valid_username(username):
+			params['username_error'] = "That's not a valid username"
+			error = True
 
-    	if error:
-    		self.render("Home_Page.html", **params)
-    	else:
-    		self.redirect('/welcome?name=' + username)
+		if error:
+			self.render("Home_Page.html", **params)
+		else:
+			self.redirect('/welcome?name=' + username)
 
 
 USER_RE = re.compile(r"^[a-zA-Z0-9_-]{3,20}$")
@@ -71,7 +71,8 @@ def valid_email(email):
 
 class WelcomePage(Handler):
 	def get(self):
-		self.render("Welcome_Page.html", name = "Pradhyo")
+		name = self.request.get("name")
+		self.render("Welcome_Page.html", name = name)
 
 app = webapp2.WSGIApplication([('/', HomePage),
 								('/welcome', WelcomePage)], 

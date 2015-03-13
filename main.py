@@ -17,6 +17,7 @@
 import webapp2
 import os
 import jinja2
+import re
 
 template_dir = os.path.join(os.path.dirname(__file__),'templates')
 jinja_env = jinja2.Environment (loader = jinja2.FileSystemLoader(template_dir), autoescape = True)
@@ -36,9 +37,29 @@ class HomePage(Handler):
     def get(self):
         self.render("Home_Page.html")
 
+    def post(self):
+    	error = False
+    	username = self.request.get('username')
+    	password = self.request.get('password')
+    	verify = self.request.get('verify')
+    	email = self.request.get('email')
+
+    	params = dict(username = username,
+    				  email = email)
+
+    	if not valid_username(username):
+    		params['username_error'] = "That's not a valid username"
+    		error = True
+
+    	if error:
+    		self.render("Home_Page.html")
+    	else:
+    		self.redirect('/welcome?name=' + username)
+
 class WelcomePage(Handler):
 	def get(self):
 		self.render("Welcome_Page.html", name = "Pradhyo")
 
 app = webapp2.WSGIApplication([('/', HomePage),
-								('/welcome', WelcomePage)], debug=True)
+								('/welcome', WelcomePage)], 
+								debug=True)

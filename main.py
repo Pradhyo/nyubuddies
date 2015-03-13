@@ -51,6 +51,14 @@ class HomePage(Handler):
 			params['username_error'] = "That's not a valid username"
 			error = True
 
+		if not valid_password(password):
+			params['password_error'] = "That's not a valid password"
+			error = True
+
+		if verify != password:
+			params['verify_error'] = "Password mismatch"
+			error = True
+
 		if error:
 			self.render("Home_Page.html", **params)
 		else:

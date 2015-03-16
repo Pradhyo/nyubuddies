@@ -1,6 +1,6 @@
 from handler import Handler, User
 import re
-#import string
+from google.appengine.api import mail
 
 class SignUp(Handler):
 	def get(self):
@@ -42,12 +42,14 @@ class SignUp(Handler):
 		if u:
 			msg = 'That user already exists.'
 			self.render('Signup.html', netID_error = "User already exists")
-		else:
-			u = User.register(self.netID, self.password, self.email)
-			u.put()
+		else:			
+			sender_address = "NYU Buddies <bpradhyo@gmail.com>"
+			user_address = self.email
+			subject = "Confirm your registration"
+			body = """ The code is %s """ %confirmation_code
+			mail.send_mail(sender_address, user_address, subject, body)
+			self.redirect("/email_confirmation")
 
-			self.login(u)
-			self.redirect('/welcome?name=' + netID)
 
 USER_RE = re.compile(r"^[a-z0-9]{6}$")
 def valid_netID(netID):
@@ -59,3 +61,19 @@ def valid_password(password):
 
 def valid_email(netID, email):
 	return len(email) == 14 and netID in email and '@nyu.edu' in email
+
+confirmation_code = '55555'
+
+class EmailConfirmation(Handler):
+	def get(self):
+		self.render("Email_Confirmation.html", error="")
+
+	def post(self):
+		user_confirmation = self.request.get("confirmation_code")
+		if user_confirmation == confirmation_code:
+			u = User.register(self.netID, self.password, self.email)
+			u.put()
+			self.login(u)
+			self.redirect('/welcome?name=' + netID)
+		else:
+			self.render("Email_Confirmation.html", error = "That is the wrong code")			

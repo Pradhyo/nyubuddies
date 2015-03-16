@@ -96,3 +96,9 @@ class User(db.Model):
 		u = cls.by_name(name)
 		if u and valid_pw(name, pw, u.pw_hash):
 			return u
+
+
+class LogOut(Handler):
+	def get(self):
+		self.logout()
+		self.redirect('/')

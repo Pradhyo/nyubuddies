@@ -41,7 +41,7 @@ class SignUp(Handler):
 		u = User.by_name(self.netID)
 		if u:
 			msg = 'That user already exists.'
-			self.render('signup-form.html', error_username = msg)
+			self.render('Signup.html', netID_error = "User already exists")
 		else:
 			u = User.register(self.netID, self.password, self.email)
 			u.put()

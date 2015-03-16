@@ -8,12 +8,12 @@ jinja_env = jinja2.Environment (loader = jinja2.FileSystemLoader(template_dir), 
 secret = 'thereis_NO_secret'
 
 def make_secure_val(val):
-    return '%s|%s' % (val, hmac.new(secret, val).hexdigest())
+	return '%s|%s' % (val, hmac.new(secret, val).hexdigest())
 
 def check_secure_val(secure_val):
-    val = secure_val.split('|')[0]
-    if secure_val == make_secure_val(val):
-        return val
+	val = secure_val.split('|')[0]
+	if secure_val == make_secure_val(val):
+		return val
 
 class Handler(webapp2.RequestHandler):
 	def write(self, *a, **kw):
@@ -27,19 +27,18 @@ class Handler(webapp2.RequestHandler):
 		self.write(self.render_str(template, **kw))
 
 	def set_secure_cookie(self, name, val):
-        cookie_val = make_secure_val(val)
-        self.response.headers.add_header(
-            'Set-Cookie',
-            '%s=%s; Path=/' % (name, cookie_val))		
+		cookie_val = make_secure_val(val)
+		self.response.headers.add_header(
+			'Set-Cookie',
+			'%s=%s; Path=/' % (name, cookie_val))		
 
-    def read_secure_cookie(self, name):
-        cookie_val = self.request.cookies.get(name)
-        return cookie_val and check_secure_val(cookie_val)
+	def read_secure_cookie(self, name):
+		cookie_val = self.request.cookies.get(name)
+		return cookie_val and check_secure_val(cookie_val)
 
-    def login(self, user):
-        self.set_secure_cookie('user_id', str(user.key().id()))
+	def login(self, user):
+		self.set_secure_cookie('user_id', str(user.key().id()))
 
-    def logout(self):
-        self.response.headers.add_header('Set-Cookie', 'user_id=; Path=/')
-
-
+	def logout(self):
+		self.response.headers.add_header('Set-Cookie', 'user_id=; Path=/')
+		

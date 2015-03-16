@@ -30,3 +30,8 @@ class Handler(webapp2.RequestHandler):
             'Set-Cookie',
             '%s=%s; Path=/' % (name, cookie_val))		
 
+    def read_secure_cookie(self, name):
+        cookie_val = self.request.cookies.get(name)
+        return cookie_val and check_secure_val(cookie_val)
+
+

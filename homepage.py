@@ -1,4 +1,4 @@
-from handler import Handler
+from handler import Handler, User
 
 class HomePage(Handler):
     def get(self):
@@ -11,7 +11,7 @@ class HomePage(Handler):
         u = User.login(netID, password)
         if u:
             self.login(u)
-            self.redirect('/welcome')
+            self.redirect('/welcome?name=' + netID)
         else:
             msg = 'Invalid login'
             self.render('Home_Page.html', error = msg)

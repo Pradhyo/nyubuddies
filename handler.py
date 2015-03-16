@@ -6,8 +6,6 @@ from string import letters
 import hashlib
 import hmac
 
-
-
 template_dir = os.path.join(os.path.dirname(__file__),'templates')
 jinja_env = jinja2.Environment (loader = jinja2.FileSystemLoader(template_dir), autoescape = True)
 
@@ -57,3 +55,7 @@ def make_pw_hash(name, pw, salt = None):
 		salt = make_salt()
 	h = hashlib.sha256(name + pw + salt).hexdigest()
 	return '%s,%s' % (salt, h)
+
+def valid_pw(name, password, h):
+	salt = h.split(',')[0]
+	return h == make_pw_hash(name, password, salt)

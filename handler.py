@@ -5,6 +5,7 @@ import random
 from string import letters
 import hashlib
 import hmac
+from google.appengine.ext import db
 
 template_dir = os.path.join(os.path.dirname(__file__),'templates')
 jinja_env = jinja2.Environment (loader = jinja2.FileSystemLoader(template_dir), autoescape = True)
@@ -59,3 +60,9 @@ def make_pw_hash(name, pw, salt = None):
 def valid_pw(name, password, h):
 	salt = h.split(',')[0]
 	return h == make_pw_hash(name, password, salt)
+
+class User(db.Model):
+	name = db.StringProperty(required = True)
+	pw_hash = db.StringProperty(required = True)
+	email = db.StringProperty()
+

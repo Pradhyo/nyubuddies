@@ -37,8 +37,17 @@ class SignUp(Handler):
 			self.done()
 
 	def done(self):
-		pass
+		#make sure the user doesn't already exist
+		u = User.by_name(self.netID)
+		if u:
+			msg = 'That user already exists.'
+			self.render('signup-form.html', error_username = msg)
+		else:
+			u = User.register(self.netID, self.password, self.email)
+			u.put()
 
+			self.login(u)
+			self.redirect('/welcome?name=' + netID)
 
 USER_RE = re.compile(r"^[a-z0-9]{6}$")
 def valid_netID(netID):

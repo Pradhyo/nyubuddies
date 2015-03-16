@@ -66,3 +66,6 @@ class User(db.Model):
 	pw_hash = db.StringProperty(required = True)
 	email = db.StringProperty()
 
+	@classmethod
+	def by_id(cls, uid):
+		return User.get_by_id(uid, parent = users_key())

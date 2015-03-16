@@ -20,6 +20,6 @@ from welcomepage import WelcomePage
 from signup import SignUp
 
 app = webapp2.WSGIApplication([('/', HomePage),
-							   ('/signup', SignUp)
+							   ('/signup', SignUp),
 							   ('/welcome', WelcomePage)], 
 							   debug=True)

@@ -17,7 +17,9 @@
 import webapp2
 from homepage import HomePage
 from welcomepage import WelcomePage
+from signup import SignUp
 
 app = webapp2.WSGIApplication([('/', HomePage),
-								('/welcome', WelcomePage)], 
-								debug=True)
+							   ('/signup', SignUp)
+							   ('/welcome', WelcomePage)], 
+							   debug=True)

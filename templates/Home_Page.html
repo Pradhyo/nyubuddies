@@ -1,15 +1,14 @@
 {% extends "base.html" %}
 {% block content %}
 
-You have to sign up!
+<b> Login here </b>
 <br>
 
 <form method="post">
-NetID <input type = "text" name = "netID" value = "{{netID}}"> <font color="red"> {{netID_error}} </font> <br> 
-Email <input type = "text" name = "email" value = "{{email}}"> <font color="red"> {{email_error}} </font> <br> 
-Password <input type = "password" name = "password"> <font color="red"> {{password_error}} </font> <br> 
-Verify Password <input type = "password" name = "verify"> <font color="red"> {{verify_error}} </font> <br> 
-<input type = "submit">
+NetID <input type = "text" name = "netID" value = "{{netID}}"> <br> 
+Password <input type = "password" name = "password"> <br> 
+<input type = "submit"> <br>
+<font color="red"> {{error}} </font> 
 </form>
 
 {% endblock %}

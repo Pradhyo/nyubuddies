@@ -5,6 +5,8 @@ import os
 template_dir = os.path.join(os.path.dirname(__file__),'templates')
 jinja_env = jinja2.Environment (loader = jinja2.FileSystemLoader(template_dir), autoescape = True)
 
+secret = 'thereis_NO_secret'
+
 def make_secure_val(val):
     return '%s|%s' % (val, hmac.new(secret, val).hexdigest())
 
@@ -36,7 +38,7 @@ class Handler(webapp2.RequestHandler):
 
     def login(self, user):
         self.set_secure_cookie('user_id', str(user.key().id()))
-        
+
     def logout(self):
         self.response.headers.add_header('Set-Cookie', 'user_id=; Path=/')
 

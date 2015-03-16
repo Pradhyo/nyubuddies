@@ -85,3 +85,9 @@ class User(db.Model):
 					name = name,
 					pw_hash = pw_hash,
 					email = email)
+
+	@classmethod
+	def login(cls, name, pw):
+		u = cls.by_name(name)
+		if u and valid_pw(name, pw, u.pw_hash):
+			return u

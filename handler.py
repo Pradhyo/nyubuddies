@@ -47,6 +47,11 @@ class Handler(webapp2.RequestHandler):
 	def logout(self):
 		self.response.headers.add_header('Set-Cookie', 'user_id=; Path=/')
 
+	def initialize(self, *a, **kw):
+		webapp2.RequestHandler.initialize(self, *a, **kw)
+		uid = self.read_secure_cookie('user_id')
+		self.user = uid and User.by_id(int(uid))		
+
 
 def make_salt(length = 5):
 	return ''.join(random.choice(letters) for x in xrange(length))

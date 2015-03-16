@@ -1,4 +1,4 @@
-from handler import Handler 
+from handler import Handler
 import re
 #import string
 
@@ -8,33 +8,36 @@ class SignUp(Handler):
 
 	def post(self):
 		error = False
-		netID = self.request.get('netID')
-		password = self.request.get('password')
-		verify = self.request.get('verify')
-		email = self.request.get('email')
+		self.netID = self.request.get('netID')
+		self.password = self.request.get('password')
+		self.verify = self.request.get('verify')
+		self.email = self.request.get('email')
 
-		params = dict(netID = netID,
-					  email = email)
+		params = dict(netID = self.netID,
+					  email = self.email)
 
-		if not valid_netID(netID):
+		if not valid_netID(self.netID):
 			params['netID_error'] = "That's not a valid netID"
 			error = True
 
-		if not valid_password(password):
+		if not valid_password(self.password):
 			params['password_error'] = "That's not a valid password"
 			error = True
-		elif verify != password:
+		elif self.verify != self.password:
 			params['verify_error'] = "Password mismatch"
 			error = True
 
-		if not valid_email(netID, email):
+		if not valid_email(self.netID, self.email):
 			params['email_error'] = "Enter email corresponding to your NetID"
 			error = True
 
 		if error:
-			self.render("Home_Page.html", **params)
+			self.render("Signup.html", **params)
 		else:
-			self.redirect('/welcome?name=' + netID)
+			self.done()
+
+	def done(self):
+		pass
 
 
 USER_RE = re.compile(r"^[a-z0-9]{6}$")

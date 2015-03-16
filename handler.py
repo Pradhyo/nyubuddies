@@ -61,6 +61,9 @@ def valid_pw(name, password, h):
 	salt = h.split(',')[0]
 	return h == make_pw_hash(name, password, salt)
 
+def users_key(group = 'default'):
+	return db.Key.from_path('users', group)
+
 class User(db.Model):
 	name = db.StringProperty(required = True)
 	pw_hash = db.StringProperty(required = True)
@@ -69,3 +72,8 @@ class User(db.Model):
 	@classmethod
 	def by_id(cls, uid):
 		return User.get_by_id(uid, parent = users_key())
+
+	@classmethod
+	def by_name(cls, name):
+		u = User.all().filter('name =', name).get()
+		return u

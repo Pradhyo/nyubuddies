@@ -37,5 +37,7 @@ class Handler(webapp2.RequestHandler):
     def login(self, user):
         self.set_secure_cookie('user_id', str(user.key().id()))
         
+    def logout(self):
+        self.response.headers.add_header('Set-Cookie', 'user_id=; Path=/')
 
 

@@ -3,6 +3,9 @@ import jinja2
 import os
 import random
 from string import letters
+import hashlib
+import hmac
+
 
 
 template_dir = os.path.join(os.path.dirname(__file__),'templates')

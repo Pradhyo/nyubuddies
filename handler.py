@@ -1,6 +1,9 @@
 import webapp2
 import jinja2
 import os
+import random
+from string import letters
+
 
 template_dir = os.path.join(os.path.dirname(__file__),'templates')
 jinja_env = jinja2.Environment (loader = jinja2.FileSystemLoader(template_dir), autoescape = True)
@@ -41,4 +44,7 @@ class Handler(webapp2.RequestHandler):
 
 	def logout(self):
 		self.response.headers.add_header('Set-Cookie', 'user_id=; Path=/')
-		
+
+
+def make_salt(length = 5):
+	return ''.join(random.choice(letters) for x in xrange(length))

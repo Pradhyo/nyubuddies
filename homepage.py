@@ -2,7 +2,7 @@ from handler import Handler, User
 
 class HomePage(Handler):
     def get(self):
-        self.render('Home_Page.html')
+        self.render('Home_Page.html', message = self.request.get('message'))
 
     def post(self):
         netID = self.request.get('netID')

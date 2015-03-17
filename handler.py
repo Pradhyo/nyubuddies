@@ -72,7 +72,7 @@ def users_key(group = 'default'):
 class User(db.Model):
 	name = db.StringProperty(required = True)
 	pw_hash = db.StringProperty(required = True)
-	email = db.StringProperty()
+	email = db.StringProperty(required = True)
 
 	@classmethod
 	def by_id(cls, uid):
@@ -84,8 +84,7 @@ class User(db.Model):
 		return u
 
 	@classmethod
-	def register(cls, name, pw, email = None):
-		pw_hash = make_pw_hash(name, pw)
+	def register(cls, name, pw_hash, email = None):
 		return User(parent = users_key(),
 					name = name,
 					pw_hash = pw_hash,

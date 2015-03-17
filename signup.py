@@ -69,7 +69,10 @@ class EmailConfirmation(Handler):
 		self.netID = self.request.get("netID")
 		self.pw_hash = self.request.get("pw_hash")
 		self.email = self.request.get("email")
-		u = User.register(self.netID, self.pw_hash, self.email)
-		u.put()
-		self.login(u)
-		self.redirect('/welcome?name=' + self.netID)
+		if valid_netID(self.netID) and valid_email(self.netID, self.email) and self.pw_hash.len(69):
+			u = User.register(self.netID, self.pw_hash, self.email)
+			u.put()
+			self.login(u)
+			self.redirect('/welcome?name=' + self.netID)
+		else:
+			self.redirect('/')

@@ -1,4 +1,4 @@
-from handler import Handler, User
+from handler import Handler, User, make_pw_hash
 import re
 from google.appengine.api import mail
 
@@ -42,13 +42,15 @@ class SignUp(Handler):
 		if u:
 			msg = 'That user already exists.'
 			self.render('Signup.html', netID_error = "User already exists")
-		else:			
+		else:
 			sender_address = "NYU Buddies <bpradhyo@gmail.com>"
 			user_address = self.email
 			subject = "Confirm your registration"
-			body = """ The code is %s """ %confirmation_code
+			self.pw_hash = make_pw_hash(self.netID,self.password)
+			confirmation_url = "?netID=%s&pw_hash=%s&email=%s" %(self.netID, self.pw_hash, self.email)
+			body = """ The url is nyubuddies.appspot.com/email_confirmation%s """ %confirmation_url
 			mail.send_mail(sender_address, user_address, subject, body)
-			self.redirect("/email_confirmation")
+			self.write("Check your email")
 
 
 USER_RE = re.compile(r"^[a-z0-9]{6}$")
@@ -62,18 +64,12 @@ def valid_password(password):
 def valid_email(netID, email):
 	return len(email) == 14 and netID in email and '@nyu.edu' in email
 
-confirmation_code = '55555'
-
 class EmailConfirmation(Handler):
 	def get(self):
-		self.render("Email_Confirmation.html", error="")
-
-	def post(self):
-		user_confirmation = self.request.get("confirmation_code")
-		if user_confirmation == confirmation_code:
-			u = User.register(self.netID, self.password, self.email)
-			u.put()
-			self.login(u)
-			self.redirect('/welcome?name=' + netID)
-		else:
-			self.render("Email_Confirmation.html", error = "That is the wrong code")			
+		self.netID = self.request.get("netID")
+		self.pw_hash = self.request.get("pw_hash")
+		self.email = self.request.get("email")
+		u = User.register(self.netID, self.pw_hash, self.email)
+		u.put()
+		self.login(u)
+		self.redirect('/welcome?name=' + self.netID)

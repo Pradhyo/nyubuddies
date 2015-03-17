@@ -73,6 +73,7 @@ class User(db.Model):
 	name = db.StringProperty(required = True)
 	pw_hash = db.StringProperty(required = True)
 	email = db.StringProperty(required = True)
+	confirm_email = db.BooleanProperty()
 
 	@classmethod
 	def by_id(cls, uid):

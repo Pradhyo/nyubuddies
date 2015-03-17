@@ -85,11 +85,12 @@ class User(db.Model):
 		return u
 
 	@classmethod
-	def register(cls, name, pw_hash, email = None):
+	def register(cls, name, pw_hash, email = None, confirm_email = False):
 		return User(parent = users_key(),
 					name = name,
 					pw_hash = pw_hash,
-					email = email)
+					email = email,
+					confirm_email = confirm_email)
 
 	@classmethod
 	def login(cls, name, pw):

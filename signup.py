@@ -4,7 +4,7 @@ from google.appengine.api import mail
 
 class SignUp(Handler):
 	def get(self):
-		self.render("Signup.html", message = "Signup here")
+		self.render("Signup.html", message = "Signup here", not_logged = True)
 
 	def post(self):
 		error = False
@@ -32,6 +32,7 @@ class SignUp(Handler):
 			error = True
 
 		if error:
+			params['not_logged'] = True
 			self.render("Signup.html", **params)
 		else:
 			self.done()

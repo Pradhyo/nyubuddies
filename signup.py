@@ -71,7 +71,7 @@ class EmailConfirmation(Handler):
 		self.pw_hash = self.request.get("pw_hash")
 		self.email = self.request.get("email")
 		u = User.by_name(self.netID)
-		if valid_netID(self.netID) and len(self.pw_hash) == 70:
+		if u and len(self.pw_hash) == 70:
 			u = User.register(self.netID, self.pw_hash, self.email, True)
 			u.put()
 			self.redirect('/?message=Your email has been successfully verified')

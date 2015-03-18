@@ -47,6 +47,8 @@ class SignUp(Handler):
 			user_address = self.email
 			subject = "Confirm your registration"
 			self.pw_hash = make_pw_hash(self.netID,self.password)
+			u = User.register(self.netID, self.pw_hash, self.email, False)
+			u.put()
 			confirmation_url = "?netID=%s&pw_hash=%s&email=%s" %(self.netID, self.pw_hash, self.email)
 			body = """ The url is nyubuddies.appspot.com/email_confirmation%s """ %confirmation_url
 			mail.send_mail(sender_address, user_address, subject, body)
@@ -69,8 +71,9 @@ class EmailConfirmation(Handler):
 		self.netID = self.request.get("netID")
 		self.pw_hash = self.request.get("pw_hash")
 		self.email = self.request.get("email")
-		if valid_netID(self.netID) and valid_email(self.netID, self.email) and len(self.pw_hash) == 70:
-			u = User.register(self.netID, self.pw_hash, self.email)
+		u = User.by_name(self.netID)
+		if u and not u.confirm_email and len(self.pw_hash) == 70:
+			u = User.register(self.netID, self.pw_hash, self.email, True)
 			u.put()
 			self.redirect('/?message=Your email has been successfully verified')
 		else:

@@ -4,16 +4,11 @@
 Hello, {{name}}
 
 <br>
-<br>
-Start chatting here to find a travel buddy..
-<br>
-<br>
 
-<form method=post>
-<textarea name = "text">{{text}}</textarea>
-<br>
 
-<input type = "submit">
-</form>
+{% for p in posts %} 
 
+<br> {{ p.render() | safe }} 
+
+{% endfor %} 
 {% endblock %}

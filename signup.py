@@ -42,7 +42,7 @@ class SignUp(Handler):
 		u = User.by_name(self.netID)
 		if u:
 			msg = 'That user already exists.'
-			self.render('Signup.html', netID_error = "User already exists")
+			self.render('Signup.html', netID_error = "User already exists", not_logged = True)
 		else:
 			sender_address = "NYU Buddies <bpradhyo@gmail.com>"
 			user_address = self.email

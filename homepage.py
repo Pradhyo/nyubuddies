@@ -14,4 +14,4 @@ class HomePage(Handler):
             self.redirect('/welcome?name=' + netID)
         else:
             msg = 'Invalid login'
-            self.render('Home_Page.html', error = msg)
+            self.render('Home_Page.html', error = msg, not_logged = True)

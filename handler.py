@@ -99,7 +99,7 @@ class User(db.Model):
 	@classmethod
 	def login(cls, name, pw):
 		u = cls.by_name(name)
-		if u and valid_pw(name, pw, u.pw_hash):
+		if u and valid_pw(name, pw, u.pw_hash) and u.confirm_email:
 			return u
 
 	def render(self):
@@ -107,7 +107,8 @@ class User(db.Model):
 
 class AllUsers(Handler):
 	def get(self):
-		users = User.all().order('-email')
+		#users = User.all().order('-email')
+		users = db.GqlQuery("select * from User")
 		self.render("All_Users.html", users = users)
 
 class LogOut(Handler):

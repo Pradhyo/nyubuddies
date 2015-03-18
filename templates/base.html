@@ -1,12 +1,18 @@
 <!DOCTYPE html>
 <html lang="en-US">
 <head>
-Find fellow NYU buddies here :)
+Find fellow NYU buddies here :) <br>
+{%if not_logged != True%}
+<a href = "/welcome">Home</a>
+<a href = "/new_post">New Post</a>
+<a href = "/change_password">Change Password</a>
+<a href = "/delete_account">Delete Account</a>
+<a href = "/logout">Logout</a>
+{%endif%}
 <br>
 </head>
 <body>
 {% block content %}
 {% endblock %}
-	
 </body>
 </html>

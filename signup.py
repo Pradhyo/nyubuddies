@@ -90,7 +90,6 @@ class ChangePassword(SignUp):
 		u = self.user
 		if u:
 			self.pw_hash = make_pw_hash(self.netID,self.password)
-			u.delete()
 			u = User.register(self.netID, self.pw_hash, self.email, True)
 			u.put()
 			self.redirect('/?message=You have successfully changed your password')			

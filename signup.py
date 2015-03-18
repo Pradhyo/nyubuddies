@@ -48,7 +48,7 @@ class SignUp(Handler):
 		u.put()
 		confirmation_url = "?netID=%s&pw_hash=%s&email=%s" %(self.netID, self.pw_hash, self.email)
 		body = """ Welcome to NYU Buddies. Click the link to verify your email ID and get started. 
-		           The url is nyubuddies.appspot.com/email_confirmation%s 
+		The url is nyubuddies.appspot.com/email_confirmation%s 
 		           """ %confirmation_url
 		mail.send_mail(sender_address, user_address, subject, body)
 		self.write("Click the link in your inbox to verify your email")

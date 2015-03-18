@@ -33,7 +33,7 @@ class NewPost(Handler):
         if self.user:
             self.render("New_Post.html", content = "", subject = "#travelbuddy")
         else:
-            self.redirect("/login")
+			self.redirect('/?message=You seem lost, please login first')
 
     def post(self):
         if not self.user:

@@ -40,22 +40,18 @@ class SignUp(Handler):
 	def done(self):
 		#make sure the user doesn't already exist
 		u = User.by_name(self.netID)
-		if u:
-			msg = 'That user already exists.'
-			self.render('Signup.html', netID_error = "User already exists", not_logged = True)
-		else:
-			sender_address = "NYU Buddies <donotreply@nyubuddies.appspotmail.com>"
-			user_address = self.email
-			subject = "Confirm your registration"
-			self.pw_hash = make_pw_hash(self.netID,self.password)
-			u = User.register(self.netID, self.pw_hash, self.email, False)
-			u.put()
-			confirmation_url = "?netID=%s&pw_hash=%s&email=%s" %(self.netID, self.pw_hash, self.email)
-			body = """ Welcome to NYU Buddies. Click the link to verify your email ID and get started. 
-			           The url is nyubuddies.appspot.com/email_confirmation%s 
-			           """ %confirmation_url
-			mail.send_mail(sender_address, user_address, subject, body)
-			self.write("Click the link in your inbox to verify your email")
+		sender_address = "NYU Buddies <donotreply@nyubuddies.appspotmail.com>"
+		user_address = self.email
+		subject = "Confirm your registration"
+		self.pw_hash = make_pw_hash(self.netID,self.password)
+		u = User.register(self.netID, self.pw_hash, self.email, False)
+		u.put()
+		confirmation_url = "?netID=%s&pw_hash=%s&email=%s" %(self.netID, self.pw_hash, self.email)
+		body = """ Welcome to NYU Buddies. Click the link to verify your email ID and get started. 
+		           The url is nyubuddies.appspot.com/email_confirmation%s 
+		           """ %confirmation_url
+		mail.send_mail(sender_address, user_address, subject, body)
+		self.write("Click the link in your inbox to verify your email")
 
 
 USER_RE = re.compile(r"^[a-z0-9]{6}$")
@@ -75,7 +71,7 @@ class EmailConfirmation(Handler):
 		self.pw_hash = self.request.get("pw_hash")
 		self.email = self.request.get("email")
 		u = User.by_name(self.netID)
-		if u and not u.confirm_email and len(self.pw_hash) == 70:
+		if valid_netID(self.netID) and len(self.pw_hash) == 70:
 			u = User.register(self.netID, self.pw_hash, self.email, True)
 			u.put()
 			self.redirect('/?message=Your email has been successfully verified')
@@ -103,12 +99,8 @@ class ChangePassword(SignUp):
 
 class DeleteAccount(SignUp):
 	def get(self):
-		u = self.user
-		if u:
-			self.render("Signup.html", message = "Enter these details to delete your account")			
-		else:
-			self.redirect('/?message=You seem lost, please login first')
-
+		self.render("Signup.html", message = "Enter these details to delete your account")			
+		
 	def done(self):
 		u = User.by_name(self.netID)
 		if u:

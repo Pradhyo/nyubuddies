@@ -21,7 +21,7 @@ class WelcomePage(Handler):
 class Post(db.Model):
     user = db.StringProperty(required = True)
     subject = db.StringProperty(required = True)
-    content = db.StringProperty(multiline = False, required = True)
+    content = db.TextProperty(required = True)
     created = db.DateTimeProperty(auto_now_add = True)
     
     def render(self):
@@ -42,12 +42,12 @@ class NewPost(Handler):
         subject = self.request.get('subject')
         content = self.request.get('content')
 
-        if subject and content:
+        if subject and len(content) in range(5,301):
             p = Post(parent = blog_key(), subject = subject, content = content, user = self.user.name)
             p.put()
             self.redirect('/welcome')
         else:
-            error = "You missed something!"
+            error = "Include valid subject and content. Characters in your content: " + str(len(content))
             self.render("New_Post.html", subject=subject, content=content, error=error)
 
 def blog_key(name = 'default'):

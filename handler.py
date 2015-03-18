@@ -12,6 +12,10 @@ jinja_env = jinja2.Environment (loader = jinja2.FileSystemLoader(template_dir), 
 
 secret = 'thereis_NO_secret'
 
+def render_str(template, **params):
+    t = jinja_env.get_template(template)
+    return t.render(params)
+
 def make_secure_val(val):
 	return '%s|%s' % (val, hmac.new(secret, val).hexdigest())
 
@@ -98,6 +102,13 @@ class User(db.Model):
 		if u and valid_pw(name, pw, u.pw_hash):
 			return u
 
+	def render(self):
+		return render_str("This_User.html", u = self)			
+
+class AllUsers(Handler):
+	def get(self):
+		users = User.all().order('-email')
+		self.render("All_Users.html", users = users)
 
 class LogOut(Handler):
 	def get(self):

@@ -44,7 +44,7 @@ class SignUp(Handler):
 		user_address = self.email
 		subject = "Confirm your registration"
 		self.pw_hash = make_pw_hash(self.netID,self.password)
-		u = User.register(self.netID, self.pw_hash, self.email, False)
+		u = User.register(self.netID, self.pw_hash, self.email, confirm_email = False)
 		u.put()
 		confirmation_url = "?netID=%s&pw_hash=%s&email=%s" %(self.netID, self.pw_hash, self.email)
 		body = """ Welcome to NYU Buddies. Click the link to verify your email ID and get started. 
@@ -72,7 +72,7 @@ class EmailConfirmation(Handler):
 		self.email = self.request.get("email")
 		u = User.by_name(self.netID)
 		if u and len(self.pw_hash) == 70:
-			u = User.register(self.netID, self.pw_hash, self.email, True)
+			u = User.register(self.netID, self.pw_hash, self.email, confirm_email = True)
 			u.put()
 			self.redirect('/?message=Your email has been successfully verified')
 		else:
@@ -90,7 +90,7 @@ class ChangePassword(SignUp):
 		u = self.user
 		if u:
 			self.pw_hash = make_pw_hash(self.netID,self.password)
-			u = User.register(self.netID, self.pw_hash, self.email, True)
+			u = User.register(self.netID, self.pw_hash, self.email, confirm_email = True)
 			u.put()
 			self.redirect('/?message=You have successfully changed your password')			
 		else:

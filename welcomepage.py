@@ -2,6 +2,7 @@ from handler import Handler
 from google.appengine.ext import db
 import os
 import jinja2
+import datetime
 
 template_dir = os.path.join(os.path.dirname(__file__),'templates')
 jinja_env = jinja2.Environment (loader = jinja2.FileSystemLoader(template_dir), autoescape = True)
@@ -23,9 +24,11 @@ class Post(db.Model):
     subject = db.StringProperty(required = True)
     content = db.TextProperty(required = True)
     created = db.DateTimeProperty(auto_now_add = True)
+    age = db.IntegerProperty
     
     def render(self):
         self._render_text = self.content.replace('\n', '<br>')
+        self.age = int((datetime.datetime.now() - self.created).total_seconds()/60)
         return render_str("This_Post.html", p = self)
 
 class NewPost(Handler):

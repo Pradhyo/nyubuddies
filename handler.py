@@ -103,10 +103,3 @@ class LogOut(Handler):
 	def get(self):
 		self.logout()
 		self.redirect('/')
-
-class DeleteAccount(Handler):
-	def get(self):
-		u = self.user
-		if u:
-			u.delete()
-		self.redirect('/?message=Your account has been deleted')

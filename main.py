@@ -1,8 +1,8 @@
 import webapp2
 from homepage import HomePage
 from welcomepage import WelcomePage, NewPost
-from signup import SignUp, EmailConfirmation, ChangePassword
-from handler import LogOut, DeleteAccount
+from signup import SignUp, EmailConfirmation, ChangePassword, DeleteAccount
+from handler import LogOut
 
 app = webapp2.WSGIApplication([('/', HomePage),
 							   ('/signup', SignUp),

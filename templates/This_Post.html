@@ -1,3 +1,2 @@
-{{p.subject}}
-{{p.created.strftime("%b %d, %Y")}}
-{{p._render_text | safe}}
+{{p.user}}({{p.created.strftime("%I:%M %p")}}): {{p._render_text | safe}}
+{{p.subject}} 

@@ -4,7 +4,7 @@ from google.appengine.api import mail
 
 class SignUp(Handler):
 	def get(self):
-		self.render("Signup.html")
+		self.render("Signup.html", message = "Signup here")
 
 	def post(self):
 		error = False
@@ -78,3 +78,24 @@ class EmailConfirmation(Handler):
 			self.redirect('/?message=Your email has been successfully verified')
 		else:
 			self.redirect('/?message=You seem lost, please login first')
+
+class ChangePassword(SignUp):
+	def get(self):
+		u = self.user
+		if u:
+			self.render("Signup.html", message = "Change your password here")			
+		else:
+			self.redirect('/?message=You seem lost, please login first')
+
+	def done(self):
+		u = self.user
+		if u:
+			self.pw_hash = make_pw_hash(self.netID,self.password)
+			u.delete()
+			u = User.register(self.netID, self.pw_hash, self.email, True)
+			u.put()
+			self.redirect('/?message=You have successfully changed your password')			
+		else:
+			self.redirect('/?message=You seem lost, please login first')
+
+			

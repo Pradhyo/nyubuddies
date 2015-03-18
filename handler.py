@@ -110,5 +110,3 @@ class DeleteAccount(Handler):
 		if u:
 			u.delete()
 		self.redirect('/?message=Your account has been deleted')
-
-

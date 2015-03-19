@@ -7,7 +7,26 @@
 Tell us what you want in 300 characters or less<br>
 <textarea name = "content">{{content}}</textarea> <br>
 What is the subject? Begin with a # <br>
-<input type = "text" name = "subject" value = "{{subject}}"> <br>
+<input type = "text" name = "subject" value = "{{subject}}"> <br><br>
+Where are you starting from? <br>
+<select name = "source">
+	<option value="None"> Other </option>
+{% for source in sources %}
+	<option value="{{source}}"> {{source}} </option>
+{% endfor %}
+</select>
+<br> Other Source:
+<input type = "text" name = "source2"> <br><br>
+Where are you going to? <br>
+<select name = "destination">
+	<option value="None"> Other </option>
+{% for destination in destinations %}
+	<option value="{{destination}}"> {{destination}} </option>
+{% endfor %}
+</select>
+<br> Other Destination:
+<input type = "text" name = "destination2"> <br>
+
 <input type = "submit"> <br>
 {{error}}
 </form>

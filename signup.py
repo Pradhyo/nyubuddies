@@ -74,7 +74,7 @@ class EmailConfirmation(Handler):
 		self.pw_hash = self.request.get("confirm")
 		self.email = self.request.get("email")
 		u = User.by_name(self.netID)
-		if u.pw_hash == self.pw_hash and not u.confirm_email:
+		if u and u.pw_hash == self.pw_hash and not u.confirm_email:
 			u.confirm_email = True
 			u.put()
 			self.redirect('/?message=Your email has been successfully verified')

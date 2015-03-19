@@ -40,19 +40,21 @@ class SignUp(Handler):
 	def done(self):
 		#make sure the user doesn't already exist
 		u = User.by_name(self.netID)
-		sender_address = "NYU Buddies <donotreply@nyubuddies.appspotmail.com>"
-		user_address = self.email
-		subject = "Confirm your registration"
-		self.pw_hash = make_pw_hash(self.netID,self.password)
-		u = User.register(self.netID, self.pw_hash, self.email, confirm_email = False)
-		u.put()
-		confirmation_url = "?netID=%s&pw_hash=%s&email=%s" %(self.netID, self.pw_hash, self.email)
-		body = """ Welcome to NYU Buddies. Click the link to verify your email ID and get started. 
-		The url is nyubuddies.appspot.com/email_confirmation%s 
-		           """ %confirmation_url
-		mail.send_mail(sender_address, user_address, subject, body)
-		self.write("Click the link in your inbox to verify your email")
-
+		if u:
+			self.render("Signup.html", message = "User already exists", not_logged = True)			
+		else:			
+			sender_address = "NYU Buddies <donotreply@nyubuddies.appspotmail.com>"
+			user_address = self.email
+			subject = "Confirm your registration with NYU Buddies"
+			self.pw_hash = make_pw_hash(self.netID,self.password)
+			u = User.register(self.netID, self.pw_hash, self.email, confirm_email = False)
+			u.put()
+			confirmation_url = "?netID=%s&confirm=%s" %(self.netID, self.pw_hash)
+			body = """ Welcome to NYU Buddies. Click the link to verify your email ID and get started. 
+			The url is nyubuddies.appspot.com/email_confirmation%s 
+			           """ %confirmation_url
+			mail.send_mail(sender_address, user_address, subject, body)
+			self.render("Signup.html", message = "Click the link in your inbox to verify your email")
 
 USER_RE = re.compile(r"^[a-z0-9]{6}$")
 def valid_netID(netID):
@@ -68,11 +70,11 @@ def valid_email(netID, email):
 class EmailConfirmation(Handler):
 	def get(self):
 		self.netID = self.request.get("netID")
-		self.pw_hash = self.request.get("pw_hash")
+		self.pw_hash = self.request.get("confirm")
 		self.email = self.request.get("email")
 		u = User.by_name(self.netID)
-		if u and len(self.pw_hash) == 70:
-			u = User.register(self.netID, self.pw_hash, self.email, confirm_email = True)
+		if u.pw_hash == self.pw_hash and not u.confirm_email:
+			u.confirm_email = True
 			u.put()
 			self.redirect('/?message=Your email has been successfully verified')
 		else:

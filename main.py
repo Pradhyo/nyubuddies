@@ -7,7 +7,7 @@ from handler import LogOut, AllUsers
 app = webapp2.WSGIApplication([('/', HomePage),
 							   ('/signup', SignUp),
 							   ('/logout', LogOut),
-							   #('/delete_account', DeleteAccount),
+							   ('/delete_account', DeleteAccount),
 							   #('/change_password', ChangePassword),
 							   ('/email_confirmation', EmailConfirmation),
 							   ('/new_post', NewPost),

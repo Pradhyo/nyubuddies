@@ -1,6 +1,7 @@
-from handler import Handler, User, make_pw_hash
+from handler import Handler, User, make_pw_hash, valid_pw
 import re
 from google.appengine.api import mail
+from google.appengine.ext import db
 
 class SignUp(Handler):
 	def get(self):
@@ -100,11 +101,11 @@ class ChangePassword(SignUp):
 
 class DeleteAccount(SignUp):
 	def get(self):
-		self.render("Signup.html", message = "Enter these details to delete your account")			
+		self.render("Signup.html", message = "Enter account details to delete")			
 		
 	def done(self):
 		u = User.by_name(self.netID)
-		if u:
+		if u and valid_pw(self.netID, self.password, u.pw_hash):
 			u.delete()
 			self.redirect('/?message=You have deleted your account')			
 		else:

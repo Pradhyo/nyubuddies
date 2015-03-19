@@ -107,9 +107,11 @@ class User(db.Model):
 
 class AllUsers(Handler):
 	def get(self):
-		#users = User.all().order('-email')
-		users = db.GqlQuery("select * from User")
-		self.render("All_Users.html", users = users)
+		if self.user and self.user.name == "pb1441":
+			users = db.GqlQuery("select * from User")
+			self.render("All_Users.html", users = users)
+		else:
+			self.redirect('/?message=You seem lost, please login first')
 
 class LogOut(Handler):
 	def get(self):

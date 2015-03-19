@@ -92,8 +92,7 @@ class ChangePassword(SignUp):
 	def done(self):
 		u = self.user
 		if u:
-			self.pw_hash = make_pw_hash(self.netID,self.password)
-			u = User.register(self.netID, self.pw_hash, self.email, confirm_email = True)
+			u.pw_hash = make_pw_hash(self.netID,self.password)			
 			u.put()
 			self.redirect('/?message=You have successfully changed your password')			
 		else:

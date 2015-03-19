@@ -28,9 +28,9 @@ class Post(db.Model):
     subject = db.StringProperty(required = True)
     content = db.TextProperty(required = True)
     created = db.DateTimeProperty(auto_now_add = True)
-    age = db.IntegerProperty
-    source = db.StringProperty
-    destination = db.StringProperty
+    age = db.IntegerProperty()
+    source = db.StringProperty()
+    destination = db.StringProperty()
     
     def render(self):
         self._render_text = self.content.replace('\n', '<br>')
@@ -54,14 +54,14 @@ class NewPost(Handler):
         destination = self.request.get('destination')
 
         if source == "None":
-            source = self.request.get('source2')
+            source = only_lowercase(self.request.get('source2'))
             if source:
-                sources.append(only_lowercase(source))
+                sources.append(source)
 
         if destination == "None":
-            destination = self.request.get('destination2')
+            destination = only_lowercase(self.request.get('destination2'))
             if destination:
-                destinations.append(only_lowercase(destination))
+                destinations.append(destination)
 
         if len(content) in range(5,301):
             p = Post(parent = blog_key(), subject = subject, content = content, user = self.user.name, source = source, destination = destination)

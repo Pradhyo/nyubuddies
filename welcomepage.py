@@ -3,9 +3,13 @@ from google.appengine.ext import db
 import os
 import jinja2
 import datetime
+import string
 
 template_dir = os.path.join(os.path.dirname(__file__),'templates')
 jinja_env = jinja2.Environment (loader = jinja2.FileSystemLoader(template_dir), autoescape = True)
+
+sources = []
+destinations = []
 
 def render_str(template, **params):
     t = jinja_env.get_template(template)
@@ -25,6 +29,8 @@ class Post(db.Model):
     content = db.TextProperty(required = True)
     created = db.DateTimeProperty(auto_now_add = True)
     age = db.IntegerProperty
+    source = db.StringProperty
+    destination = db.StringProperty
     
     def render(self):
         self._render_text = self.content.replace('\n', '<br>')
@@ -34,7 +40,7 @@ class Post(db.Model):
 class NewPost(Handler):
     def get(self):
         if self.user:
-            self.render("New_Post.html", content = "", subject = "#travelbuddy")
+            self.render("New_Post.html", content = "", subject = "#travelbuddy", sources = sources, destinations = destinations)
         else:
 			self.redirect('/?message=You seem lost, please login first')
 
@@ -44,9 +50,21 @@ class NewPost(Handler):
 
         subject = self.request.get('subject')
         content = self.request.get('content')
+        source = self.request.get('source')
+        destination = self.request.get('destination')
 
-        if subject and len(content) in range(5,301):
-            p = Post(parent = blog_key(), subject = subject, content = content, user = self.user.name)
+        if source == "None":
+            source = self.request.get('source2')
+            if source:
+                sources.append(only_lowercase(source))
+
+        if destination == "None":
+            destination = self.request.get('destination2')
+            if destination:
+                destinations.append(only_lowercase(destination))
+
+        if len(content) in range(5,301):
+            p = Post(parent = blog_key(), subject = subject, content = content, user = self.user.name, source = source, destination = destination)
             p.put()
             self.redirect('/welcome')
         else:
@@ -55,3 +73,10 @@ class NewPost(Handler):
 
 def blog_key(name = 'default'):
     return db.Key.from_path('blogs', name)
+
+def only_lowercase(text):
+    """Remove digits and punctuation, then convert remaining to lowercase """
+    not_allowed = string.punctuation + string.whitespace + string.digits
+    text2 = [each for each in text if each not in not_allowed]
+    text2 = ''.join(text2)
+    return text2.lower()

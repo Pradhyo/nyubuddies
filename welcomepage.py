@@ -71,6 +71,8 @@ class NewPost(Handler):
 			self.redirect('/?message=You seem lost, please login first')
 
 		error = ""
+		sources = Source.all()
+		destinations = Destination.all()
 		subject = self.request.get('subject')
 		content = self.request.get('content')
 		source = self.request.get('source')

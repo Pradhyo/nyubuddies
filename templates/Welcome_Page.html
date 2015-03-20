@@ -5,8 +5,8 @@ Hello, {{name}}
 <br> <br>
 <form method="post">
 From? <select name = "source">
-{% for source in sources %}
-	<option value="{{source.place}}"> {{source.place}} </option>
+{% for each in sources %}
+	<option value="{{each.source}}"> {{each.source}} </option>
 {% endfor %}
 </select>
 <input type="submit">

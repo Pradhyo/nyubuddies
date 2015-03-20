@@ -18,10 +18,16 @@ def render_str(template, **params):
 class WelcomePage(Handler):
 	def get(self):
 		if self.user:
-			posts = Post.all().order('-created')
-			self.render("Welcome_Page.html", name = self.user.name, posts = posts)
+			posts = Post.all().order("-created")
+			self.render("Welcome_Page.html", name = self.user.name, sources = sources, posts = posts)			
 		else:
 			self.redirect('/?message=You seem lost, please login first')
+
+	def post(self):
+		source_searched = self.request.get('source')
+		posts = Post.all().order("-created").filter("source =", source_searched)
+		self.render("Welcome_Page.html", name = self.user.name, sources = sources, posts = posts, message = "Search Results")			
+
 
 class Post(db.Model):
     user = db.StringProperty(required = True)

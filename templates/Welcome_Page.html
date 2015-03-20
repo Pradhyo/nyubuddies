@@ -2,9 +2,18 @@
 {% block content %}
 
 Hello, {{name}}
+<br> <br>
+<form method="post">
+From? <select name = "source">
+{% for source in sources %}
+	<option value="{{source}}"> {{source}} </option>
+{% endfor %}
+</select>
+<input type="submit">
 
-<br>
+</form>
 
+<b>{{message}}</b>
 
 {% for p in posts %} 
 

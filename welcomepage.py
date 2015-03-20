@@ -103,7 +103,7 @@ class NewPost(Handler):
 					pl.put()
 			self.redirect('/welcome')
 		
-		self.render("New_Post.html", subject=subject, content=content, error=error)
+		self.render("New_Post.html", subject=subject, content=content, error=error, sources = sources, destinations = destinations)
 
 def blog_key(name = 'default'):
 	return db.Key.from_path('blogs', name)

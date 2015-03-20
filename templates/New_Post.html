@@ -17,7 +17,7 @@ Where are you starting from? <br>
 <select name = "source">
 	<option value="None"> Enter below</option>
 {% for source in sources %}
-	<option value="{{source}}"> {{source}} </option>
+	<option value="{{source.place}}"> {{source.place}} </option>
 {% endfor %}
 </select>
 <br> Other:
@@ -26,7 +26,7 @@ Where are you going to? <br>
 <select name = "destination">
 	<option value="None"> Enter below </option>
 {% for destination in destinations %}
-	<option value="{{destination}}"> {{destination}} </option>
+	<option value="{{destination.place}}"> {{destination.place}} </option>
 {% endfor %}
 </select>
 <br> Other:

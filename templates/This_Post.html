@@ -1,2 +1,4 @@
-{{p.user}}({{p.age}}m ago): {{p._render_text | safe}}
-#{{p.subject}}{% if p.source %} from: {{p.source}} {%endif%} {% if p.destination %} to: {{p.destination}} {%endif%}
+{{p.user}}({{p.age}}m ago)- From {{p.source}} {%endif%} {% if p.destination %} to {{p.destination}} {%endif%}
+<br>
+{{p._render_text | safe}}
+#{{p.subject}}{% if p.source %} <br>

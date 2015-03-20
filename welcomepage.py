@@ -32,7 +32,7 @@ class WelcomePage(Handler):
 	def get(self):
 		if self.user:
 			posts = Post.all().order("-created")
-			sources = Source.all()
+			sources = db.GqlQuery("SELECT DISTINCT source FROM Post")
 			self.render("Welcome_Page.html", name = self.user.name, sources = sources, posts = posts)			
 		else:
 			self.redirect('/?message=You seem lost, please login first')
@@ -40,7 +40,7 @@ class WelcomePage(Handler):
 	def post(self):
 		source_searched = self.request.get('source')
 		posts = Post.all().order("-created").filter("source =", source_searched)
-		sources = Source.all()
+		sources = db.GqlQuery("SELECT DISTINCT source FROM Post")
 		self.render("Welcome_Page.html", name = self.user.name, sources = sources, posts = posts, message = "Search Results")			
 
 class Post(db.Model):
@@ -60,8 +60,8 @@ class Post(db.Model):
 class NewPost(Handler):
 	def get(self):
 		if self.user:
-			sources = Source.all()
-			destinations = Destination.all()
+			sources = db.GqlQuery("SELECT DISTINCT source FROM Post")
+			destinations = db.GqlQuery("SELECT DISTINCT destination FROM Post")
 			self.render("New_Post.html", content = "", subject = "travelbuddy", sources = sources, destinations = destinations)
 		else:
 			self.redirect('/?message=You seem lost, please login first')
@@ -71,8 +71,8 @@ class NewPost(Handler):
 			self.redirect('/?message=You seem lost, please login first')
 
 		error = ""
-		sources = Source.all()
-		destinations = Destination.all()
+		sources = db.GqlQuery("SELECT DISTINCT source FROM Post")
+		destinations = db.GqlQuery("SELECT DISTINCT destination FROM Post")
 		subject = self.request.get('subject')
 		content = self.request.get('content')
 		source = self.request.get('source')
@@ -94,7 +94,7 @@ class NewPost(Handler):
 		if not error:			
 			p = Post(parent = blog_key(), subject = only_lowercase(subject), content = content, user = self.user.name, source = source, destination = destination)
 			p.put()
-			if source:
+			'''if source:
 				s_pl = Source.by_place(source)
 				d_pl = Destination.by_place(destination)
 				if not s_pl:
@@ -102,7 +102,7 @@ class NewPost(Handler):
 					pl.put()
 				if not d_pl:
 					pl = Destination(parent = place_key(), place = destination)
-					pl.put()
+					pl.put()'''
 			self.redirect('/welcome')
 		
 		self.render("New_Post.html", subject=subject, content=content, error=error, sources = sources, destinations = destinations)

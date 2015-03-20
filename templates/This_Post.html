@@ -1,4 +1,4 @@
-{{p.user}}({{p.age}}m ago)- {% if p.source %} {{p.source}} to {{p.destination}} {%endif%}
+{{p.user}}({{p.age}}m ago): {% if p.source %} {{p.source}} &#8658; {{p.destination}} {%endif%}
 <br>
 {{p._render_text | safe}}
 #{{p.subject}}<br>

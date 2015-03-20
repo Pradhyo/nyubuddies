@@ -6,7 +6,7 @@ Hello, {{name}}
 <form method="post">
 From? <select name = "source">
 {% for source in sources %}
-	<option value="{{source}}"> {{source}} </option>
+	<option value="{{source.place}}"> {{source.place}} </option>
 {% endfor %}
 </select>
 <input type="submit">

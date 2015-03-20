@@ -1,33 +1,39 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h2>New Post</h2>
-
+<br>
+<b>New Post</b>
+<br><br>
+1. Subject will be converted to a single lowercase word. <br>
+2. Enter both source/destination or none. <br>
+3. Check dropdown menu before entering text. <br>
+4. Source is not the same as destination. <br><br>
 <form method="post">
-Tell us what you want in 300 characters or less<br>
+Message (in 300 characters or less)<br>
 <textarea name = "content">{{content}}</textarea> <br>
-What is the subject? Begin with a # <br>
+Subject <br>
 <input type = "text" name = "subject" value = "{{subject}}"> <br><br>
 Where are you starting from? <br>
 <select name = "source">
-	<option value="None"> Other </option>
+	<option value="None"> Enter below</option>
 {% for source in sources %}
 	<option value="{{source}}"> {{source}} </option>
 {% endfor %}
 </select>
-<br> Other Source:
+<br> Other:
 <input type = "text" name = "source2"> <br><br>
 Where are you going to? <br>
 <select name = "destination">
-	<option value="None"> Other </option>
+	<option value="None"> Enter below </option>
 {% for destination in destinations %}
 	<option value="{{destination}}"> {{destination}} </option>
 {% endfor %}
 </select>
-<br> Other Destination:
+<br> Other:
 <input type = "text" name = "destination2"> <br>
 
 <input type = "submit"> <br>
 {{error}}
 </form>
+
 {% endblock %}

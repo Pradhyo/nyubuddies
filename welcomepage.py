@@ -8,22 +8,6 @@ import string
 template_dir = os.path.join(os.path.dirname(__file__),'templates')
 jinja_env = jinja2.Environment (loader = jinja2.FileSystemLoader(template_dir), autoescape = True)
 
-class Source(db.Model):
-	place = db.StringProperty(required = True)
-
-	@classmethod
-	def by_place(cls, place):
-		pl = Source.all().filter('place =', place).get()
-		return pl
-	
-class Destination(db.Model):
-	place = db.StringProperty(required = True)
-
-	@classmethod
-	def by_place(cls, place):
-		pl = Destination.all().filter('place =', place).get()
-		return pl	
-
 def render_str(template, **params):
 	t = jinja_env.get_template(template)
 	return t.render(params)
@@ -94,15 +78,6 @@ class NewPost(Handler):
 		if not error:			
 			p = Post(parent = blog_key(), subject = only_lowercase(subject), content = content, user = self.user.name, source = source, destination = destination)
 			p.put()
-			'''if source:
-				s_pl = Source.by_place(source)
-				d_pl = Destination.by_place(destination)
-				if not s_pl:
-					pl = Source(parent = place_key(), place = source)
-					pl.put()
-				if not d_pl:
-					pl = Destination(parent = place_key(), place = destination)
-					pl.put()'''
 			self.redirect('/welcome')
 		
 		self.render("New_Post.html", subject=subject, content=content, error=error, sources = sources, destinations = destinations)

@@ -9,13 +9,31 @@
 		<link href='http://fonts.googleapis.com/css?family=Lora:400,700' rel='stylesheet' type='text/css'>
 	</head>
 	<body>
+		
 		{%if not_logged != True%}
-		Find fellow NYU buddies here :) 
-		<a href = "/welcome">Home</a>
-		<a href = "/new_post">New Post</a>
-		<a href = "/logout">Logout</a>
+		<div class="container transbox text-center">
+			<ul class = "nav nav-tabs nav-justified">
+					
+
+				        <li role="presentation"><a href = "/welcome">NYU Buddies</a></li>
+				        <li><a href = "/new_post">New Post</a></li>
+				        <li role = "presentation" class="dropdown">
+				          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Account<span class="caret"></span></a>
+				          <ul class="dropdown-menu" role="menu" class = "text-right">
+				            <li><a href="/logout">Logout</a></li>
+				            <li><a href="/change_password">Change Password</a></li>
+				            <li><a href="/delete_account">Delete Account</a></li>
+				          </ul>
+				        </li>
+				      </ul>
+				</div>
+		</div>
+
 		{%endif%}
-		<br>
+
+
+
+
 	{% block content %}
 	{% endblock %}
 	</body>

@@ -1,5 +1,5 @@
 html { 
-  font-family: sans-serif;
+  font-family: 'Lora', serif;
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
   background: url(https://placekitten.com/1280/640) no-repeat center center fixed; 
@@ -8,6 +8,12 @@ html {
   -o-background-size: cover;
   background-size: cover;
 }
+
+/*
+* {
+   outline: 1px solid red !important;
+} */
+
 
 .container {
   margin-right: auto;

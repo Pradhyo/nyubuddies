@@ -5,7 +5,7 @@ from google.appengine.ext import db
 
 class SignUp(Handler):
 	def get(self):
-		self.render("Signup.html", message = "Signup here", not_logged = True)
+		self.render("Signup.html", message = "Signup", not_logged = True)
 
 	def post(self):
 		error = False
@@ -18,22 +18,23 @@ class SignUp(Handler):
 					  email = self.email)
 
 		if not valid_netID(self.netID):
-			params['netID_error'] = "That's not a valid netID"
+			params['netID_error'] = "Invalid netID"
 			error = True
 
 		if not valid_password(self.password):
-			params['password_error'] = "That's not a valid password"
+			params['password_error'] = "Invalid password"
 			error = True
 		elif self.verify != self.password:
 			params['verify_error'] = "Password mismatch"
 			error = True
 
 		if not valid_email(self.netID, self.email):
-			params['email_error'] = "Enter email corresponding to your NetID"
+			params['email_error'] = "Email doesn't match NetID"
 			error = True
 
 		if error:
 			params['not_logged'] = True
+			params['message'] = "Please fix the errors"
 			self.render("Signup.html", **params)
 		else:
 			self.done()
@@ -42,7 +43,7 @@ class SignUp(Handler):
 		#make sure the user doesn't already exist
 		u = User.by_name(self.netID)
 		if u:
-			self.render("Signup.html", message = "User already exists", not_logged = True)			
+			self.render("Signup.html", netID_error = "User already exists", not_logged = True)			
 		else:			
 			sender_address = "NYU Buddies <donotreply@nyubuddies.appspotmail.com>"
 			user_address = self.email
@@ -85,7 +86,7 @@ class ChangePassword(SignUp):
 	def get(self):
 		u = self.user
 		if u:
-			self.render("Signup.html", message = "Change your password here")			
+			self.render("Signup.html", message = "Change Password")			
 		else:
 			self.redirect('/?message=You seem lost, please login first')
 
@@ -100,7 +101,7 @@ class ChangePassword(SignUp):
 
 class DeleteAccount(SignUp):
 	def get(self):
-		self.render("Signup.html", message = "Enter account details to delete")			
+		self.render("Signup.html", message = "Delete Account")			
 		
 	def done(self):
 		u = User.by_name(self.netID)

@@ -13,5 +13,5 @@ class HomePage(Handler):
             self.login(u)
             self.redirect('/welcome?name=' + netID)
         else:
-            msg = 'Invalid login'
+            msg = 'Invalid credentials'
             self.render('Home_Page.html', error = msg, not_logged = True)

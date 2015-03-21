@@ -1,16 +1,21 @@
 <!DOCTYPE html>
 <html lang="en-US">
-<head>
-Find fellow NYU buddies here :) <br>
-{%if not_logged != True%}
-<a href = "/welcome">Home</a>
-<a href = "/new_post">New Post</a>
-<a href = "/logout">Logout</a>
-{%endif%}
-<br>
-</head>
-<body>
-{% block content %}
-{% endblock %}
-</body>
+	<head>
+		<meta charset = "utf-8">
+		<meta http-equiv = "X-UA-Compatible" content="IE-edge">
+		<meta name = "viewport" content = "width = device-width, initial-scale = 1">
+		<title> NYU Buddies </title>
+		<link rel="stylesheet" type="text/css" href="stylesheets/styles.css">
+	</head>
+	<body>
+		Find fellow NYU buddies here :) <br>
+		{%if not_logged != True%}
+		<a href = "/welcome">Home</a>
+		<a href = "/new_post">New Post</a>
+		<a href = "/logout">Logout</a>
+		{%endif%}
+		<br>
+	{% block content %}
+	{% endblock %}
+	</body>
 </html>

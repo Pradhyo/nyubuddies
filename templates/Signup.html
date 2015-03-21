@@ -1,15 +1,33 @@
 {% extends "base.html" %}
 {% block content %}
 
-<b> {{message}} </b>
-<br>
+<div class="container transbox text-center">
 
-<form method="post">
-NetID <input type = "text" name = "netID" value = "{{netID}}"> <font color="red"> {{netID_error}} </font> <br> 
-Email <input type = "text" name = "email" value = "{{email}}"> <font color="red"> {{email_error}} </font> <br> 
-Password <input type = "password" name = "password"> <font color="red"> {{password_error}} </font> <br> 
-Verify Password <input type = "password" name = "verify"> <font color="red"> {{verify_error}} </font> <br> 
-<input type = "submit">
-</form>
+	{% if message %}
+	<div class = "text-center alert alert-info">
+	<h3>{{message}}</h3>
+	</div>
+	{%endif%}
+
+	<form method="post" class="col-md-3 col-md-offset-4">
+		<div class = "form-group col-md-12"> 
+			<input type = "text" name = "netID" class = "form-control" placeholder = "NetID "value = "{{netID}}"> <font color="red"> {{netID_error}} </font>
+		</div> 
+		<div class = "form-group col-md-12"> 
+			<input type = "text" name = "email" class = "form-control" placeholder = "netID@nyu.edu" value = "{{email}}"> <font color="red"> {{email_error}} </font>
+		</div>
+		<div class = "form-group col-md-12"> 
+			<input type = "password" name = "password" class = "form-control" placeholder = "Password"> <font color="red"> {{password_error}} </font>
+		</div>
+		<div class = "form-group col-md-12"> 
+			<input type = "password" placeholder = "Verify Password" class = "form-control" name = "verify"> <font color="red"> {{verify_error}} </font>		
+		</div>
+		<div class = "row col-md-offset-3 col-md-6">
+			<button type = "submit" class = "btn btn-primary btn-lg"> 
+				Submit 
+			</button>
+		</div>
+	</form>
+</div>
 <a href = "/">Login</a>
 {% endblock %}

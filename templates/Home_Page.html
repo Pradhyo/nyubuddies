@@ -7,7 +7,12 @@
 	<div class="row"> 
 		<h1> Find fellow NYU buddies here. </h1>
 	</div>
-	
+
+	{% if message %}
+	<div class = "text-center alert alert-danger">
+	{{message}}
+	</div>
+	{%endif%}
 
 	<form method="post">
 		<div class="col-md-3 col-md-offset-4">
@@ -17,6 +22,9 @@
 			<div class="form-group col-md-12">
 				<input type = "password" class = "form-control" name = "password" placeholder = "Password">
 			</div>
+			{% if error %}
+			<div class="row col-md-offset-3 col-md-6 alert alert-danger"> {{error}} </div>
+			{%endif%}			
 			<div class = "row col-md-offset-3 col-md-6">
 				
 					<button type = "submit" class = "btn btn-primary btn-lg"> 
@@ -29,15 +37,6 @@
 		</div>
 	
 	</form>		
-	
-
-
-	
-	
-	
-	<font color="red"> {{error}} </font> 
-	
-	
 
 </div>
 {% endblock %}

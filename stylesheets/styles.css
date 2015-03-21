@@ -2142,7 +2142,7 @@ select[multiple].form-group-lg .form-control {
 .has-feedback {
   position: relative;
 }
-.has-feedback .form-control {
+.has-feedback {
   padding-right: 42.5px;
 }
 .form-control-feedback {

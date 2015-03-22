@@ -1,4 +1,9 @@
-{{p.user}}({{p.age}}m ago): {% if p.source %} {{p.source}} &#8658; {{p.destination}} {%endif%}
-<br>
-{{p._render_text | safe}}
-#{{p.subject}}<br>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title text-capitalize">{{p.user}}({{p.age}}m): {% if p.source %} {{p.source}} &#8658; {{p.destination}} {%endif%}</h3>
+  </div>
+  <div class="panel-body">
+	{{p._render_text | safe}}
+	#{{p.subject}}
+  </div>
+</div>

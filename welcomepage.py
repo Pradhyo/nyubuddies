@@ -25,7 +25,7 @@ class WelcomePage(Handler):
 		source_searched = self.request.get('source')
 		posts = Post.all().order("-created").filter("source =", source_searched)
 		sources = db.GqlQuery("SELECT DISTINCT source FROM Post")
-		self.render("Welcome_Page.html", name = self.user.name, sources = sources, posts = posts, message = "Search Results")			
+		self.render("Welcome_Page.html", name = self.user.name, sources = sources, posts = posts, search_message = "Search Results")			
 
 class Post(db.Model):
 	user = db.StringProperty(required = True)

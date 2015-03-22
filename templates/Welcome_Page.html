@@ -1,11 +1,18 @@
 {% extends "base.html" %}
 {% block content %}
 
-<b>{{message}}</b>
+<div class="row">
+	<div class="col-md-2"></div>
+		<div class = "container transbox col-md-7">
 
-{% for p in posts %} 
+			<h3>{{search_message}}</h3>
 
-<br> {{ p.render() | safe }} 
+			{% for p in posts %} 
 
-{% endfor %} 
+			<br> {{ p.render() | safe }} 
+
+			{% endfor %} 
+		</div>
+	</div>
+</div>
 {% endblock %}

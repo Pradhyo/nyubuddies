@@ -70,7 +70,7 @@ class NewPost(Handler):
 
 		if source or destination:
 			if not source or not destination or source == destination:
-				error += "Enter both source/destination or none. "		 
+				error += "Enter different source/destination or none. "		 
 
 		if len(content) not in range(5,301) or not subject:
 			error += "Include valid subject and content. Characters in your content: " + str(len(content))
@@ -80,7 +80,7 @@ class NewPost(Handler):
 			p.put()
 			self.redirect('/welcome')
 		
-		self.render("New_Post.html", subject=subject, content=content, error=error, sources = sources, destinations = destinations)
+		self.render("New_Post.html", subject=subject, name = self.user.name, content=content, error=error, sources = sources, destinations = destinations)
 
 def blog_key(name = 'default'):
 	return db.Key.from_path('blogs', name)

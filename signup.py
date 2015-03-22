@@ -86,7 +86,7 @@ class ChangePassword(SignUp):
 	def get(self):
 		u = self.user
 		if u:
-			self.render("Signup.html", message = "Change Password")			
+			self.render("Signup.html", message = "Change Password", name= self.user.name)			
 		else:
 			self.redirect('/?message=You seem lost, please login first')
 
@@ -101,7 +101,12 @@ class ChangePassword(SignUp):
 
 class DeleteAccount(SignUp):
 	def get(self):
-		self.render("Signup.html", message = "Delete Account")			
+		u = self.user
+		if u:
+			self.render("Signup.html", message = "Delete Account", name= self.user.name)			
+		else:
+			self.redirect('/?message=You seem lost, please login first')
+
 		
 	def done(self):
 		u = User.by_name(self.netID)

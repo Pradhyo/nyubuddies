@@ -14,7 +14,9 @@
 		<div class="container-fluid transbox">
 			<div class = "row">
 				<div class = "col-md-8">
-					<ul class = "nav nav-tabs">
+					<nav class="navbar navbar-default">
+					    <div class="collapse navbar-collapse" id="userbutton">
+							<ul class = "nav nav-tabs">
 						        <li role = "presentation" class="dropdown">
 						          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{name}}<span class="caret"></span></a>
 						          <ul class="dropdown-menu" role="menu">
@@ -25,7 +27,11 @@
 						            <li><a href="/delete_account">Delete Account</a></li>
 						          </ul>
 						        </li>
-			        </ul>
+					        </ul>
+				        </div>
+				    </nav>
+
+
 			    </div>
 			    <div class = "col-md-2">
 				    <form method="post">

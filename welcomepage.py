@@ -17,7 +17,7 @@ class WelcomePage(Handler):
 		if self.user:
 			posts = Post.all().order("-created")
 			sources = db.GqlQuery("SELECT DISTINCT source FROM Post")
-			self.render("Welcome_Page.html", name = self.user.name, sources = sources, posts = posts)			
+			self.render("Welcome_Page.html", name = self.user.name, enabled = True, sources = sources, posts = posts)			
 		else:
 			self.redirect('/?message=You seem lost, please login first')
 

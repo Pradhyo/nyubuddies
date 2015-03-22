@@ -1,7 +1,9 @@
 {% extends "base.html" %}
 {% block content %}
 
-<div class="container transbox text-center">
+<div class="row">
+<div class="col-md-3"></div>
+<div class="container transbox text-center col-md-4">
 
 	{% if message %}
 	<div class = "text-center alert alert-info">
@@ -9,25 +11,29 @@
 	</div>
 	{%endif%}
 
-	<form method="post" class="col-md-3 col-md-offset-4">
-		<div class = "form-group col-md-12"> 
+	<form method="post" class="row">
+		<div class = "form-group col-md-10"> 
 			<input type = "text" name = "netID" class = "form-control" placeholder = "NetID "value = "{{netID}}"> <font color="red"> {{netID_error}} </font>
 		</div> 
-		<div class = "form-group col-md-12"> 
+		<div class = "form-group col-md-10"> 
 			<input type = "text" name = "email" class = "form-control" placeholder = "netID@nyu.edu" value = "{{email}}"> <font color="red"> {{email_error}} </font>
 		</div>
-		<div class = "form-group col-md-12"> 
+		<div class = "form-group col-md-10"> 
 			<input type = "password" name = "password" class = "form-control" placeholder = "Password"> <font color="red"> {{password_error}} </font>
 		</div>
-		<div class = "form-group col-md-12"> 
+		<div class = "form-group col-md-10"> 
 			<input type = "password" placeholder = "Verify Password" class = "form-control" name = "verify"> <font color="red"> {{verify_error}} </font>		
 		</div>
-		<div class = "row col-md-offset-3 col-md-6">
+		<div class = "row">
 			<button type = "submit" class = "btn btn-primary btn-lg"> 
 				Submit 
 			</button>
 		</div>
+		<div class="row">
+			<a class = "btn btn-warning btn-lg" href = "/">Home</a><br>
+		</div>
+
 	</form>
 </div>
-<a href = "/">Login</a>
+</div>
 {% endblock %}

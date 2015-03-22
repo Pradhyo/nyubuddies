@@ -1,18 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
 
-Hello, {{name}}
-<br> <br>
-<form method="post">
-From? <select name = "source">
-{% for each in sources %}
-	<option value="{{each.source}}"> {{each.source}} </option>
-{% endfor %}
-</select>
-<input type="submit">
-
-</form>
-
 <b>{{message}}</b>
 
 {% for p in posts %} 

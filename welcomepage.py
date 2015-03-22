@@ -46,7 +46,7 @@ class NewPost(Handler):
 		if self.user:
 			sources = db.GqlQuery("SELECT DISTINCT source FROM Post")
 			destinations = db.GqlQuery("SELECT DISTINCT destination FROM Post")
-			self.render("New_Post.html", content = "", subject = "travelbuddy", sources = sources, destinations = destinations)
+			self.render("New_Post.html", name = self.user.name, content = "", subject = "travelbuddy", sources = sources, destinations = destinations)
 		else:
 			self.redirect('/?message=You seem lost, please login first')
 

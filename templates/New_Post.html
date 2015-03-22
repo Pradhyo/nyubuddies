@@ -51,7 +51,9 @@
 				<div class="form-group col-md-11">
 					<input type = "submit" class="form-control"> <br>
 				</div>
-				<div class="alert alert-danger col-md-11 text-center" role="alert">{{error}}</div>
+				{% if error %}
+					<div class="alert alert-danger col-md-11 text-center" role="alert">{{error}}</div>
+				{%endif%}
 			</form>
 
 </div>

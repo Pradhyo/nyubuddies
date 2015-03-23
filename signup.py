@@ -52,11 +52,10 @@ class SignUp(Handler):
 			u = User.register(self.netID, self.pw_hash, self.email, confirm_email = False)
 			u.put()
 			confirmation_url = "?netID=%s&confirm=%s" %(self.netID, self.pw_hash)
-			body = """ Welcome to NYU Buddies. Click the link to verify your email ID and get started. 
-			The url is nyubuddies.appspot.com/email_confirmation%s 
+			body = """ Welcome to NYU Buddies. Click the link to verify your email ID and get started. The url is nyubuddies.appspot.com/email_confirmation%s 
 			           """ %confirmation_url
 			mail.send_mail(sender_address, user_address, subject, body)
-			self.render("Signup.html", message = "Click the link in your inbox to verify your email")
+			self.redirect('/?message=Click the link in your inbox to verify your email')
 
 USER_RE = re.compile(r"^[a-z0-9]{6}$")
 def valid_netID(netID):

@@ -40,10 +40,10 @@ class Post(db.Model):
 		age = int((datetime.datetime.now() - self.created).total_seconds()/60)
 		if age < 60:
 			age = str(age) + 'm'
-		elif age >=60:
-			age = str(int(age/60)) + 'h'
 		elif age >= 1440:
 			age = str(int(age/1440)) + 'd'
+		elif age >=60:
+			age = str(int(age/60)) + 'h'
 		return render_str("This_Post.html", p = self, age = age)
 
 class NewPost(Handler):

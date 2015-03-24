@@ -32,14 +32,19 @@ class Post(db.Model):
 	subject = db.StringProperty(required = True)
 	content = db.TextProperty()
 	created = db.DateTimeProperty(auto_now_add = True)
-	age = db.IntegerProperty()
 	source = db.StringProperty()
 	destination = db.StringProperty()
 	
 	def render(self):
 		self._render_text = self.content.replace('\n', '<br>')
-		self.age = int((datetime.datetime.now() - self.created).total_seconds()/60)
-		return render_str("This_Post.html", p = self)
+		age = int((datetime.datetime.now() - self.created).total_seconds()/60)
+		if age < 60:
+			age = str(age) + 'm'
+		elif age >=60:
+			age = str(int(age/60)) + 'h'
+		elif age >= 1440:
+			age = str(int(age/1440)) + 'd'
+		return render_str("This_Post.html", p = self, age = age)
 
 class NewPost(Handler):
 	def get(self):

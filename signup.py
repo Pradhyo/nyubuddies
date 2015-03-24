@@ -43,7 +43,7 @@ class SignUp(Handler):
 		#make sure the user doesn't already exist
 		u = User.by_name(self.netID)
 		if u:
-			self.render("Signup.html", netID_error = "User already exists", not_logged = True)			
+			self.render("Signup.html", netID_error = "User already exists", not_logged = True, message ="Signup")			
 		else:			
 			sender_address = "NYU Buddies <donotreply@nyubuddies.appspotmail.com>"
 			user_address = self.email

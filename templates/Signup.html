@@ -11,24 +11,24 @@
 	{%endif%}
 
 	<form method="post" class="row">
-		<div class = "form-group col-md-10"> 
+		<div class = "form-group col-md-offset-1 col-md-9"> 
 			<input type = "text" name = "netID" class = "form-control" placeholder = "NetID "value = "{{netID}}"> <font color="red"> {{netID_error}} </font>
 		</div> 
-		<div class = "form-group col-md-10"> 
+		<div class = "form-group col-md-offset-1 col-md-9"> 
 			<input type = "text" name = "email" class = "form-control" placeholder = "netID@nyu.edu" value = "{{email}}"> <font color="red"> {{email_error}} </font>
 		</div>
-		<div class = "form-group col-md-10"> 
+		<div class = "form-group col-md-offset-1 col-md-9"> 
 			<input type = "password" name = "password" class = "form-control" placeholder = "Password"> <font color="red"> {{password_error}} </font>
 		</div>
-		<div class = "form-group col-md-10"> 
+		<div class = "form-group col-md-offset-1 col-md-9"> 
 			<input type = "password" placeholder = "Verify Password" class = "form-control" name = "verify"> <font color="red"> {{verify_error}} </font>		
 		</div>
-		<div class = "row">
+		<div class = "col-md-offset-1 col-md-9">
 			<button type = "submit" class = "btn btn-primary btn-lg"> 
 				Submit 
 			</button>
 		</div>
-		<div class="row">
+		<div class="col-md-offset-1 col-md-9">
 			<a class = "btn btn-warning btn-lg no-underline" href = "/">Home</a><br>
 		</div>
 

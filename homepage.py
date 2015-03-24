@@ -2,6 +2,8 @@ from handler import Handler, User
 
 class HomePage(Handler):
     def get(self):
+        if self.user:
+            self.redirect('/welcome')
         self.render('Home_Page.html', message = self.request.get('message'), not_logged = True)
 
     def post(self):

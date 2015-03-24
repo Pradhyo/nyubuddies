@@ -16,7 +16,7 @@ class WelcomePage(Handler):
 	def get(self):
 		if self.user:
 			posts = Post.all().order("-created")
-			sources = db.GqlQuery("SELECT DISTINCT source FROM Post")
+			sources = db.GqlQuery("SELECT DISTINCT source FROM Post WHERE source != ''")
 			self.render("Welcome_Page.html", name = self.user.name, enabled = True, sources = sources, posts = posts)			
 		else:
 			self.redirect('/?message=You seem lost, please login first')
@@ -24,7 +24,7 @@ class WelcomePage(Handler):
 	def post(self):
 		source_searched = self.request.get('source')
 		posts = Post.all().order("-created").filter("source =", source_searched)
-		sources = db.GqlQuery("SELECT DISTINCT source FROM Post")
+		sources = db.GqlQuery("SELECT DISTINCT source FROM Post WHERE source != ''")
 		self.render("Welcome_Page.html", name = self.user.name, sources = sources, posts = posts, search_message = "Search Results")			
 
 class Post(db.Model):
@@ -49,8 +49,8 @@ class Post(db.Model):
 class NewPost(Handler):
 	def get(self):
 		if self.user:
-			sources = db.GqlQuery("SELECT DISTINCT source FROM Post")
-			destinations = db.GqlQuery("SELECT DISTINCT destination FROM Post")
+			sources = db.GqlQuery("SELECT DISTINCT source FROM Post WHERE source != ''")
+			destinations = db.GqlQuery("SELECT DISTINCT destination FROM Post WHERE destination != ''")
 			self.render("New_Post.html", name = self.user.name, content = "", subject = "travelbuddy", sources = sources, destinations = destinations)
 		else:
 			self.redirect('/?message=You seem lost, please login first')
@@ -60,8 +60,8 @@ class NewPost(Handler):
 			self.redirect('/?message=You seem lost, please login first')
 
 		error = ""
-		sources = db.GqlQuery("SELECT DISTINCT source FROM Post")
-		destinations = db.GqlQuery("SELECT DISTINCT destination FROM Post")
+		sources = db.GqlQuery("SELECT DISTINCT source FROM Post WHERE source != ''")
+		destinations = db.GqlQuery("SELECT DISTINCT destination FROM Post WHERE destination != ''")
 		subject = self.request.get('subject')
 		content = self.request.get('content')
 		source = self.request.get('source')

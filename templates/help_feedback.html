@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container-fluid col-md-offset-2">
+	<div class = "transbox col-md-9">
+		<div class = "text-center alert alert-info">
+			<h2>Help</h2>
+		</div>
+
+		<div class = "form-group"> 
+		
+		1. Choose your <b>starting point</b> and use 'Search Posts' to see relavant posts. <br>
+		2. If you can't find your place, enter a New Post and others will be able to see your starting point in the search options. <br>
+		3. Feel free to email a user using their NYU email ID to sort details about meeting up.
+		</div>
+
+		<form method="post">
+			<div class = "form-group"> 
+				Feedback
+				<textarea name = "feedback" class="form-control" placeholder = "Bugs/New feature requests :)"></textarea>
+			</div>
+
+			<div class="form-group">
+				<input type = "submit" class="form-control"> <br>
+				<font color="green"> {{thanks}} </font>
+			</div>
+
+		</form>
+
+	</div>
+</div>
+
+
+{% endblock %}

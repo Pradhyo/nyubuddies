@@ -4,6 +4,7 @@ import os
 import jinja2
 import datetime
 import string
+from google.appengine.api import mail
 
 template_dir = os.path.join(os.path.dirname(__file__),'templates')
 jinja_env = jinja2.Environment (loader = jinja2.FileSystemLoader(template_dir), autoescape = True)
@@ -45,6 +46,19 @@ class Post(db.Model):
 		elif age >=60:
 			age = str(int(age/60)) + 'h'
 		return render_str("This_Post.html", p = self, age = age)
+
+class Help(Handler):
+	def get(self):
+		if self.user:
+			self.render("help_feedback.html", name = self.user.name)
+
+	def post(self):
+		sender_address = "NYU Buddies Feedback<donotreply@nyubuddies.appspotmail.com>"
+		user_address = "pb1441@nyu.edu"
+		subject = 'NYU Buddies Feedback'
+		body = self.user.name + '- ' + self.request.get('feedback') 
+		mail.send_mail(sender_address, user_address, subject, body)
+		self.render("help_feedback.html", name = self.user.name, thanks = "Thank you so much for the feedback")
 
 class NewPost(Handler):
 	def get(self):

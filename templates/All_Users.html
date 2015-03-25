@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container-fluid col-md-offset-2">
+		<div class = "transbox col-md-9">
+
+			<h3>{{search_message}}</h3>
+
+			{% for u in users %} 
+
+			<br> {{ u.render() | safe }} 
+
+			{% endfor %} 
+		</div>
+</div>
+{% endblock %}
